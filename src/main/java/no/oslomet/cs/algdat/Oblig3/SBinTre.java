@@ -88,29 +88,23 @@ public class SBinTre<T> {
     {
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
-        Node<T> p = rot, q = null;               // p starter i roten
-        int cmp = 0;                             // hjelpevariabel
-        TreeSet ts = new TreeSet();
-        //ts.add(p);
+        Node<T> p = rot, q = null;
+        int cmp = 0;
 
-        while (p != null)       // fortsetter til p er ute av treet
-        {
-            q = p;                                 // q er forelder til p
-            cmp = comp.compare(verdi,p.verdi);     // bruker komparatoren
-            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
-            //ts.add(p);
+        while (p != null) {
+            q = p;
+            cmp = comp.compare(verdi, p.verdi);
+            p = cmp < 0 ? p.venstre : p.høyre;
         }
 
-        // p er nå null, dvs. ute av treet, q er den siste vi passerte
+        p = new Node<>(verdi, q);
 
-        p = new Node<>(verdi, null, null, p.forelder);       // oppretter en ny node
+        if (q == null) rot = p;
+        else if (cmp < 0) q.venstre = p;
+        else q.høyre = p;
 
-        if (q == null) rot = p;                  // p blir rotnode
-        else if (cmp < 0) q.venstre = p;         // venstre barn til q
-        else q.høyre = p;                        // høyre barn til q
-
-        antall++;                                // én verdi mer i treet
-        return true;                             // vellykket innlegging
+        antall++;
+        return true;
     }
 
     public boolean fjern(T verdi) {
@@ -121,28 +115,7 @@ public class SBinTre<T> {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
-    public int antall(T verdi) {
-        Stack<Node> s = new Stack<Node>();
-        Node current = rot;
-        int antall = 0;
-
-        while (current != null && !s.empty()) {
-            while (current != null) {
-                s.push(current);
-                current = current.venstre;
-            }
-
-            current = s.peek();
-            s.pop();
-
-            if (current.verdi == verdi) {
-                antall++;
-            }
-
-            current = current.høyre;
-        }
-        return antall;
-    }
+    public int antall(T verdi) { throw new UnsupportedOperationException("Ikke kodet ennå!"); }
 
     public void nullstill() {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
