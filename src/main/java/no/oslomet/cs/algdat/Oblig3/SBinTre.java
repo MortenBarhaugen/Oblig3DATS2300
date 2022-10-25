@@ -58,9 +58,10 @@ public class SBinTre<T> {
             else if (cmp > 0) p = p.høyre;
             else return true;
         }
-
         return false;
     }
+
+
 
     public int antall() {
         return antall;
@@ -115,7 +116,21 @@ public class SBinTre<T> {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
-    public int antall(T verdi) { throw new UnsupportedOperationException("Ikke kodet ennå!"); }
+    public int antall(T verdi) {
+        Node<T> p = rot;
+        int ant = 0;
+
+        while (p != null) {
+            int cmp = comp.compare(verdi, p.verdi);
+            if (cmp < 0) p = p.venstre;
+            else if (cmp > 0) p = p.høyre;
+            else {
+                ant++;
+                p = p.høyre;
+            }
+        }
+        return ant;
+    }
 
     public void nullstill() {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
